@@ -2,7 +2,7 @@
 
 Mission Control observes and controls the CI/CD and deployment state of self-hosted services from one place, through a TUI for humans and a CLI for agents.
 
-This glossary records the vocabulary as understood today. Two terms are marked `_Unsettled_`: they are placeholders standing in for a decision that has not been made, and they should not harden into the project's language by default.
+This glossary records the vocabulary as understood today.
 
 ## Language
 
@@ -14,17 +14,26 @@ _Avoid_: dashboard, console, control plane
 
 ### The abstraction
 
-**Domain**:
-One of the three provider-agnostic capability areas the foundation abstracts: VCS, CI/CD, and Observability. Each domain defines an interface; providers implement it.
-_Unsettled_: "Domain" is a working label. It collides with the design sense of the word (the problem space this project models), which is confusing in a repo that keeps a `CONTEXT.md`. The original phrasing was "general terms". Alternatives worth weighing: Capability, Concern, Facet, Surface.
+**Capability**:
+One of the three provider-agnostic areas Mission Control abstracts: VCS, CI/CD, and Runtime. Each capability defines an interface, and providers implement it.
+_Typed as_: `vcs`, `ci`, `runtime` — note that **CI/CD** is deliberately typed `ci`
+_Avoid_: domain, concern, facet, surface, area
+
+**Runtime**:
+The capability covering a service's running deployments: what is deployed to a stage, its health, and acting on it (restart, stop).
+_Avoid_: observability, ops, infra, cluster
+
+**Feature**:
+A single operation within a capability that a given provider may or may not support, such as watching a pipeline for live updates.
+_Avoid_: capability (in this fine-grained sense), support flag
 
 **Provider**:
-A concrete implementation of a single domain's interface. The first providers are GitLab (VCS), GitLab CI/CD (CI/CD), and Kubernetes (Observability).
+A concrete implementation of a single capability's interface. The first providers are GitLab (VCS), GitLab CI/CD (CI/CD), and Kubernetes (Runtime).
 _Avoid_: integration, backend, adapter, plugin, driver
 
-**Foundation**:
-The provider-agnostic core: the domain interfaces, the service and stage identity model, the TUI/CLI shell, and the AXI-compliant command surface. Everything a provider plugs into.
-_Unsettled_: this layer has no agreed name. "Foundation" is a placeholder; naming it is open work.
+**Core**:
+The provider-agnostic centre: the capability interfaces, the service and stage identity model, the TUI/CLI shell, and the AXI-compliant command surface. Everything a provider plugs into.
+_Avoid_: foundation, kernel, chassis, framework, platform
 
 ### What is watched
 
@@ -33,7 +42,7 @@ The logical unit Mission Control monitors — one thing you ship, binding togeth
 _Avoid_: app, application, project, repo, workload
 
 **Stage**:
-An environment a service is deployed to, such as dev, staging, or prod. Stages are cross-domain: a service's identity spans all of them, and each stage binds to its own provider instance context (a Kubernetes context, for the Observability domain).
+An environment a service is deployed to, such as dev, staging, or prod. Stages are cross-capability: a service's identity spans all of them, and each stage binds to its own provider instance context (a Kubernetes context, for the Runtime capability).
 _Avoid_: environment, env, tier, cluster, namespace
 
 ### The agent interface
