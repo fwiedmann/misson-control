@@ -24,7 +24,7 @@ The capability covering a service's running deployments: what is deployed to a s
 _Avoid_: observability, ops, infra, cluster
 
 **Feature**:
-A single operation within a capability that a given provider may or may not support, such as watching a pipeline for live updates.
+A single optional operation within a capability that a provider may or may not support. Observation is not a Feature: every v1 CI/CD and Runtime provider must implement it.
 _Avoid_: capability (in this fine-grained sense), support flag
 
 **Provider**:
@@ -37,6 +37,10 @@ _Avoid_: foundation, kernel, chassis, framework, platform
 
 ### What is watched
 
+**Observation**:
+A live, coalescing view of one target's latest whole-state snapshot. It may skip intermediate states but always converges on the newest state available from the provider.
+_Avoid_: watch, event stream, subscription, live view
+
 **Service**:
 The logical unit Mission Control monitors — one thing you ship, binding together a VCS repository, a CI/CD pipeline, and one or more deployments.
 _Avoid_: app, application, project, repo, workload
@@ -48,5 +52,5 @@ _Avoid_: environment, env, tier, cluster, namespace
 ### The agent interface
 
 **AXI** (Agent eXperience Interface):
-The agent-ergonomic CLI design specification (https://axi.md/) that Mission Control's CLI conforms to fully. It governs how a CLI presents itself to an agent: token-efficient structured output, minimal default field sets, definitive empty states, structured errors, and contextual next-step hints.
+The agent-ergonomic CLI design specification (<https://axi.md/>) that Mission Control's CLI conforms to fully. It governs how a CLI presents itself to an agent: token-efficient structured output, minimal default field sets, definitive empty states, structured errors, and contextual next-step hints.
 _Avoid_: agent mode, machine output, JSON mode
