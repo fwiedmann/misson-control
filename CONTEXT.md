@@ -49,6 +49,20 @@ _Avoid_: app, application, project, repo, workload
 An environment a service is deployed to, such as dev, staging, or prod. Stages are cross-capability: a service's identity spans all of them, and each stage binds to its own provider instance context (a Kubernetes context, for the Runtime capability).
 _Avoid_: environment, env, tier, cluster, namespace
 
+### What runs in CI/CD
+
+**Pipeline**:
+A CI/CD run for one source ref, containing ordered pipeline phases, jobs, and manual actions.
+_Avoid_: workflow, build
+
+**Pipeline Phase**:
+An ordered group of jobs inside a pipeline. This is Mission Control's provider-neutral name for GitLab CI's "stage", which must not be confused with a Mission Control Stage.
+_Avoid_: CI stage, GitLab stage, stage
+
+**Manual Action**:
+A user- or agent-triggerable action exposed by a pipeline. In GitLab this is usually a manual job, but Core treats it as an action rather than as provider plumbing.
+_Avoid_: manual job, trigger job
+
 ### The agent interface
 
 **AXI** (Agent eXperience Interface):
