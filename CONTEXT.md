@@ -35,6 +35,16 @@ _Avoid_: integration, backend, adapter, plugin, driver
 The provider-agnostic centre: the capability interfaces, the service and stage identity model, the TUI/CLI shell, and the AXI-compliant command surface. Everything a provider plugs into.
 _Avoid_: foundation, kernel, chassis, framework, platform
 
+### The VCS capability
+
+**Merge Request**:
+A proposed change to a Service's VCS repository, carrying its review and merge state. Providers map their equivalent object to this term.
+_Avoid_: pull request, change request, review request
+
+**Release**:
+A tagged VCS revision, optionally enriched with provider release metadata and a stored changelog. Every tag appears as a Release.
+_Avoid_: version, version record
+
 ### What is watched
 
 **Observation**:
