@@ -17,7 +17,7 @@ FollowLogs(ctx, target, logQuery) -> LogStream
 Restart(ctx, target) -> error
 ```
 
-Start and Stop are not in v1. Restart applies to the whole configured service target, returns after Kubernetes accepts the change, and has no result value. Issue #10 owns its dry-run, confirmation, and idempotency rules.
+Start and Stop are not in v1. Restart applies to the whole configured service target, returns after Kubernetes accepts the change, and has no result value. It patches the workload's Pod template. A paused Deployment and a StatefulSet using the `OnDelete` update strategy reject Restart with a typed unsupported-state error because a template change cannot start a rollout. Mission Control does not delete StatefulSet Pods to imitate one. Issue #10 owns Restart's dry-run, confirmation, and idempotency rules.
 
 ## Targets and snapshots
 
