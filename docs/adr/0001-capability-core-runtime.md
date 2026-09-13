@@ -8,7 +8,9 @@ Mission Control abstracts three provider-agnostic areas behind interfaces that p
 
 ## Why Runtime, not Observability
 
-This is a correction, not a rename. Mutations are in v1: the interface for a running deployment carries `Restart` and `Stop` alongside status and logs. An interface named `Observability` that mutates the thing it observes is lying about itself, and the name would have quietly discouraged putting control operations where they belong. `Runtime` names the running system, which is equally at home observing it and acting on it.
+This is a correction, not a rename. The interface for a running deployment carries `Restart` alongside status and logs. An interface named `Observability` that mutates the thing it observes is lying about itself, and the name would have quietly discouraged putting control operations where they belong. `Runtime` names the running system, which is equally at home observing it and acting on it.
+
+Start and Stop were removed from v1 while designing the Runtime capability. Restart remains enough to keep Runtime from being an observation-only capability. Full reasoning: [issue #9](https://github.com/fwiedmann/misson-control/issues/9).
 
 ## Why the set stays at three
 

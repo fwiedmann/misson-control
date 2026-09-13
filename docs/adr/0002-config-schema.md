@@ -31,7 +31,9 @@ services:
     runtime:
       kubernetes:
         namespace: api           # stage-invariant, given one stage per cluster
+        kind: Deployment         # Deployment or StatefulSet
         workload: api
+        container: api           # app container used for deployed-version reporting
 ```
 
 ## Why stages are global rather than per-service
@@ -59,7 +61,8 @@ It also **quarantines provider vocabulary**. `namespace` and `workload` are Kube
 - **No secrets in the file**, which is diffable and will end up in somebody's dotfiles repo. A schema that *permits* an inline token guarantees one eventually gets committed.
 - **No cross-capability defaulting.** `ci.gitlab.project` does not fall back to `vcs.gitlab.project`; defaulting couples blocks the capability model exists to separate, and renaming the `vcs` block would break the CI/CD binding elsewhere.
 - **VCS is required, plus at least one of CI/CD or Runtime.** A VCS-only entry is a bookmark, not a service, and would give the overview rows that can never show anything.
-- **No slot is reserved for image-tag→source resolution** ([issue #11](https://github.com/fwiedmann/misson-control/issues/11)). Because provider blocks are opaque, that decision can add keys later as a purely additive change; reserving one now would mean guessing the shape of an unmade decision.
+- **Kubernetes workload identity is explicit.** The service block names `kind`, `workload`, and the app `container`. Deployment and StatefulSet resources may share a namespace and name, while sidecars must not determine the Service's deployed version. Missing or unknown values are errors; the provider never probes kinds or guesses a container.
+- **No slot is reserved for image-tag→source resolution** ([issue #11](https://github.com/fwiedmann/misson-control/issues/11)). The configured app container tells Runtime which image evidence to return, but issue #11 still owns how that evidence resolves to a VCS Release.
 
 ## Considered options
 

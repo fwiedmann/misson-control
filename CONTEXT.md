@@ -20,7 +20,7 @@ _Typed as_: `vcs`, `ci`, `runtime` — note that **CI/CD** is deliberately typed
 _Avoid_: domain, concern, facet, surface, area
 
 **Runtime**:
-The capability covering a service's running deployments: what is deployed to a stage, its health, and acting on it (restart, stop).
+The capability covering a service's running deployments: what is deployed to a stage, its health, and acting on it through a restart.
 _Avoid_: observability, ops, infra, cluster
 
 **Feature**:
@@ -58,6 +58,16 @@ _Avoid_: app, application, project, repo, workload
 **Stage**:
 An environment a service is deployed to, such as dev, staging, or prod. Stages are cross-capability: a service's identity spans all of them, and each stage binds to its own provider instance context (a Kubernetes context, for the Runtime capability).
 _Avoid_: environment, env, tier, cluster, namespace
+
+### What runs at runtime
+
+**Runtime Instance**:
+One pod-like replica of a Service running within a Stage. A Kubernetes provider maps one Pod lifetime to one Runtime Instance.
+_Avoid_: pod, service instance, replica
+
+**Container**:
+One named execution unit within a Runtime Instance. A Service designates one Container as its app container for deployed-version reporting.
+_Avoid_: app process, pod
 
 ### What runs in CI/CD
 
